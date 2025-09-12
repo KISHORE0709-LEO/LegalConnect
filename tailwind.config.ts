@@ -47,6 +47,18 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Legal Connect custom colors
+        legal: {
+          primary: "hsl(var(--legal-primary))",
+          "primary-dark": "hsl(var(--legal-primary-dark))",
+          secondary: "hsl(var(--legal-secondary))",
+          accent: "hsl(var(--legal-accent))",
+        },
+        risk: {
+          low: "hsl(var(--risk-low))",
+          medium: "hsl(var(--risk-medium))",
+          high: "hsl(var(--risk-high))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -57,6 +69,19 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+      },
+      backgroundImage: {
+        "gradient-primary": "var(--gradient-primary)",
+        "gradient-hero": "var(--gradient-hero)",
+        "gradient-card": "var(--gradient-card)",
+      },
+      boxShadow: {
+        "legal": "var(--shadow-legal)",
+        "card": "var(--shadow-card)",
+        "hover": "var(--shadow-hover)",
+      },
+      fontFamily: {
+        "legal": "var(--font-legal)",
       },
       borderRadius: {
         lg: "var(--radius)",
