@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { eventBus } from "@/lib/events";
 import { 
   Briefcase, 
   GraduationCap, 
@@ -84,11 +85,11 @@ export const PersonaSelector = () => {
             Home
           </Button>
           <div className="flex gap-2">
-            <Button variant="outline" className="flex items-center gap-2" onClick={() => openAuth('login')}>
+            <Button variant="outline" className="flex items-center gap-2" onClick={() => eventBus.emit('openAuth', 'login')}>
               <LogIn className="h-4 w-4" />
               Login
             </Button>
-            <Button className="flex items-center gap-2 bg-gradient-primary" onClick={() => openAuth('signup')}>
+            <Button className="flex items-center gap-2 bg-gradient-primary" onClick={() => eventBus.emit('openAuth', 'signup')}>
               <UserPlus className="h-4 w-4" />
               Sign Up
             </Button>

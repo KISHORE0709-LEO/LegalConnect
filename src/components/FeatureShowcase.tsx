@@ -240,7 +240,23 @@ export const FeatureShowcase = () => {
                       </div>
                       
                       <div className="flex gap-2 pt-4">
-                        <Button className="bg-gradient-primary shadow-legal" onClick={() => toast({ title: `Demo: ${feature.title}`, description: "Interactive frontend demo. Connect backend for full experience." })}>
+                      <Button className="bg-gradient-primary shadow-legal" onClick={() => {
+                        const routeMap: { [key: string]: string } = {
+                          "AI-Powered Analysis": "/ai-analysis",
+                          "Risk Assessment": "/risk-assessment", 
+                          "Chat with Documents": "/chat-documents",
+                          "Lawyer Connect": "/lawyer-connect",
+                          "Court Locator": "/court-locator",
+                          "Document Comparison": "/document-comparison",
+                          "Multi-Language Support": "/multi-language",
+                          "Voice Assistant": "/voice-assistant",
+                          "Instant Processing": "/instant-processing"
+                        };
+                        const route = routeMap[feature.title];
+                        if (route) {
+                          window.location.href = route;
+                        }
+                      }}>
                           <Play className="mr-2 h-4 w-4" />
                           Try Demo
                         </Button>
