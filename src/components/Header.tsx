@@ -1,15 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Scale, Menu, X } from "lucide-react";
+import { AuthDialog } from "@/components/AuthDialog";
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [authOpen, setAuthOpen] = useState(false);
+  const [authMode, setAuthMode] = useState<"login" | "signup">("login");
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent).detail as { mode?: "login" | "signup" } | undefined;
+      if (detail?.mode === "signup") setAuthMode("signup"); else setAuthMode("login");
+      setAuthOpen(true);
+    };
+    window.addEventListener("open-auth", handler as EventListener);
+    return () => window.removeEventListener("open-auth", handler as EventListener);
+  }, []);
 
   return (
     <header className="bg-background/95 backdrop-blur-sm border-b border-border sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <div className="bg-gradient-primary p-2 rounded-lg shadow-legal">
               <Scale className="h-6 w-6 text-primary-foreground" />
             </div>
@@ -32,8 +45,8 @@ export const Header = () => {
           </nav>
 
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost">Sign In</Button>
-            <Button className="bg-gradient-primary shadow-legal hover:shadow-hover transition-all duration-300">
+            <Button variant="ghost" onClick={() => { setAuthMode("login"); setAuthOpen(true); }}>Sign In</Button>
+            <Button className="bg-gradient-primary shadow-legal hover:shadow-hover transition-all duration-300" onClick={() => { setAuthMode("signup"); setAuthOpen(true); }}>
               Get Started
             </Button>
           </div>
@@ -62,8 +75,8 @@ export const Header = () => {
                 Find Lawyers
               </a>
               <div className="flex flex-col space-y-2 pt-4">
-                <Button variant="ghost">Sign In</Button>
-                <Button className="bg-gradient-primary shadow-legal">
+                <Button variant="ghost" onClick={() => { setAuthMode("login"); setAuthOpen(true); }}>Sign In</Button>
+                <Button className="bg-gradient-primary shadow-legal" onClick={() => { setAuthMode("signup"); setAuthOpen(true); }}>
                   Get Started
                 </Button>
               </div>
@@ -71,6 +84,7 @@ export const Header = () => {
           </div>
         )}
       </div>
+      <AuthDialog open={authOpen} onOpenChange={setAuthOpen} mode={authMode} />
     </header>
   );
 };

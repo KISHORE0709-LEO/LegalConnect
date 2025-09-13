@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
 import { 
   Brain, 
   Shield, 
@@ -146,6 +147,7 @@ const features = [
 
 export const FeatureShowcase = () => {
   const [selectedFeature, setSelectedFeature] = useState<any>(null);
+  const { toast } = useToast();
 
   const openFeatureModal = (feature: any) => {
     setSelectedFeature(feature);
@@ -192,7 +194,7 @@ export const FeatureShowcase = () => {
                       <CardDescription className="text-muted-foreground mb-4">
                         {feature.description}
                       </CardDescription>
-                      <Button variant="outline" size="sm" className="w-full group-hover:bg-gradient-primary group-hover:text-primary-foreground group-hover:border-legal-primary">
+                      <Button variant="outline" size="sm" className="w-full group-hover:bg-gradient-primary group-hover:text-primary-foreground group-hover:border-legal-primary" onClick={() => openFeatureModal(feature)}>
                         Learn More
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
@@ -238,11 +240,11 @@ export const FeatureShowcase = () => {
                       </div>
                       
                       <div className="flex gap-2 pt-4">
-                        <Button className="bg-gradient-primary shadow-legal">
+                        <Button className="bg-gradient-primary shadow-legal" onClick={() => toast({ title: `Demo: ${feature.title}`, description: "Interactive frontend demo. Connect backend for full experience." })}>
                           <Play className="mr-2 h-4 w-4" />
                           Try Demo
                         </Button>
-                        <Button variant="outline">
+                        <Button variant="outline" onClick={() => toast({ title: "Ask Questions", description: "Chat UI mock. Connect backend to enable document Q&A." })}>
                           <MessageCircle className="mr-2 h-4 w-4" />
                           Ask Questions
                         </Button>

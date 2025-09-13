@@ -79,16 +79,16 @@ export const PersonaSelector = () => {
       <div className="container mx-auto px-4">
         {/* Navigation Header */}
         <div className="flex justify-between items-center mb-8">
-          <Button variant="ghost" className="flex items-center gap-2">
+          <Button variant="ghost" className="flex items-center gap-2" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <Home className="h-4 w-4" />
             Home
           </Button>
           <div className="flex gap-2">
-            <Button variant="outline" className="flex items-center gap-2">
+            <Button variant="outline" className="flex items-center gap-2" onClick={() => openAuth('login')}>
               <LogIn className="h-4 w-4" />
               Login
             </Button>
-            <Button className="flex items-center gap-2 bg-gradient-primary">
+            <Button className="flex items-center gap-2 bg-gradient-primary" onClick={() => openAuth('signup')}>
               <UserPlus className="h-4 w-4" />
               Sign Up
             </Button>
@@ -121,7 +121,7 @@ export const PersonaSelector = () => {
               >
                 <CardHeader className="text-center">
                   <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full ${
-                    isSelected ? 'bg-gradient-primary' : 'bg-background'
+                    isSelected ? 'bg-gradient-primary' : 'bg-gradient-to-br from-legal-primary/5 to-legal-primary-dark/10'
                   } shadow-card mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
                     <Icon className={`h-8 w-8 ${isSelected ? 'text-primary-foreground' : persona.color}`} />
                   </div>
