@@ -121,7 +121,7 @@ export const PersonaSelector = () => {
                         : 'group-hover:bg-legal-primary group-hover:text-primary-foreground group-hover:border-legal-primary'
                     }`}
                   >
-                    {isSelected ? 'Start Onboarding' : 'Select Role'}
+                    {isSelected ? 'Selected' : 'Select Role'}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </CardContent>
