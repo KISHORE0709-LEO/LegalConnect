@@ -1,7 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { eventBus } from "@/lib/events";
 import { 
   Briefcase, 
   GraduationCap, 
@@ -9,11 +8,9 @@ import {
   UserCheck, 
   Tractor,
   Users,
-  ArrowRight,
-  Home,
-  LogIn,
-  UserPlus
+  ArrowRight
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const personas = [
   {
@@ -62,6 +59,7 @@ const personas = [
 
 export const PersonaSelector = () => {
   const [selectedPersona, setSelectedPersona] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const handlePersonaSelect = (personaId: string) => {
     setSelectedPersona(personaId);
@@ -69,32 +67,13 @@ export const PersonaSelector = () => {
 
   const handleContinue = () => {
     if (selectedPersona) {
-      // Navigate to document upload section
-      const documentSection = document.getElementById('upload');
-      documentSection?.scrollIntoView({ behavior: 'smooth' });
+      navigate(`/onboarding/basic-info?role=${selectedPersona}`);
     }
   };
 
   return (
     <section id="personas" className="py-20 bg-gradient-to-br from-secondary/30 via-background to-legal-secondary/20">
       <div className="container mx-auto px-4">
-        {/* Navigation Header */}
-        <div className="flex justify-between items-center mb-8">
-          <Button variant="ghost" className="flex items-center gap-2" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <Home className="h-4 w-4" />
-            Home
-          </Button>
-          <div className="flex gap-2">
-            <Button variant="outline" className="flex items-center gap-2" onClick={() => eventBus.emit('openAuth', 'login')}>
-              <LogIn className="h-4 w-4" />
-              Login
-            </Button>
-            <Button className="flex items-center gap-2 bg-gradient-primary" onClick={() => eventBus.emit('openAuth', 'signup')}>
-              <UserPlus className="h-4 w-4" />
-              Sign Up
-            </Button>
-          </div>
-        </div>
 
         <div className="text-center mb-16">
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4 bg-gradient-to-r from-legal-primary to-legal-primary-dark bg-clip-text text-transparent">
@@ -134,7 +113,7 @@ export const PersonaSelector = () => {
                   <CardDescription className="text-muted-foreground mb-6">
                     {persona.description}
                   </CardDescription>
-                  <Button 
+                   <Button 
                     variant={isSelected ? "default" : "outline"}
                     className={`w-full transition-all duration-300 ${
                       isSelected 
@@ -142,7 +121,7 @@ export const PersonaSelector = () => {
                         : 'group-hover:bg-legal-primary group-hover:text-primary-foreground group-hover:border-legal-primary'
                     }`}
                   >
-                    {isSelected ? 'Selected' : 'Select Role'}
+                    {isSelected ? 'Start Onboarding' : 'Select Role'}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </CardContent>
@@ -158,7 +137,7 @@ export const PersonaSelector = () => {
             disabled={!selectedPersona}
             className="bg-gradient-primary shadow-legal hover:shadow-hover transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Continue with Selected Role
+            Start Onboarding
             <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
         </div>
