@@ -1,0 +1,53 @@
+swagger: '2.0'
+info:
+  title: Legal Connect API
+  version: '1.0'
+host: legal-connect-ai.appspot.com
+schemes:
+  - https
+produces:
+  - application/json
+paths:
+  /api/analyze-document:
+    post:
+      summary: Analyze legal document
+      operationId: analyzeDocument
+      x-google-backend:
+        address: https://legal-connect-ai.appspot.com/api/analyze-document
+      consumes:
+        - multipart/form-data
+      parameters:
+        - name: document
+          in: formData
+          type: file
+          required: true
+      responses:
+        200:
+          description: Analysis result
+  /api/chat-document:
+    post:
+      summary: Chat with document
+      operationId: chatDocument
+      x-google-backend:
+        address: https://legal-connect-ai.appspot.com/api/chat-document
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              documentId:
+                type: string
+              question:
+                type: string
+      responses:
+        200:
+          description: Chat response
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: key
+    in: query
+security:
+  - api_key: []

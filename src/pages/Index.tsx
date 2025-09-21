@@ -1,17 +1,15 @@
 import { Header } from "@/components/Header";
 import { HeroSection } from "@/components/HeroSection";
-import { PersonaSelector } from "@/components/PersonaSelector";
-import { DocumentUpload } from "@/components/DocumentUpload";
-import { FeatureShowcase } from "@/components/FeatureShowcase";
+import { LawyerConnectShowcase } from "@/components/LawyerConnectShowcase";
+import { CourtLocatorShowcase } from "@/components/CourtLocatorShowcase";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background font-legal">
       <Header />
       <HeroSection />
-      <PersonaSelector />
-      <DocumentUpload />
-      <FeatureShowcase />
+      <LawyerConnectShowcase />
+      <CourtLocatorShowcase />
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface AuthDialogProps {
   open: boolean;
@@ -13,6 +14,7 @@ interface AuthDialogProps {
 
 export const AuthDialog = ({ open, onOpenChange, mode = "login" }: AuthDialogProps) => {
   const { toast } = useToast();
+  const { login, signup } = useAuth();
   const [activeMode, setActiveMode] = useState<"login" | "signup">(mode);
   const [loading, setLoading] = useState(false);
 
@@ -22,12 +24,11 @@ export const AuthDialog = ({ open, onOpenChange, mode = "login" }: AuthDialogPro
 
   useEffect(() => setActiveMode(mode), [mode]);
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    setTimeout(() => {
-      setLoading(false);
+    try {
       if (!email || !password || (activeMode === "signup" && !name)) {
         toast({
           title: "Missing information",
@@ -37,18 +38,44 @@ export const AuthDialog = ({ open, onOpenChange, mode = "login" }: AuthDialogPro
         return;
       }
 
-      toast({
-        title: activeMode === "login" ? "Welcome back!" : "Account created",
-        description:
-          activeMode === "login"
-            ? "You are now logged in (mock). Connect Supabase to enable real auth."
-            : "Sign up successful (mock). Connect Supabase to enable real auth.",
-      });
+      if (activeMode === "login") {
+        await login(email, password);
+        toast({
+          title: "Welcome back!",
+          description: "You are now logged in.",
+        });
+      } else {
+        await signup(email, password, { fullName: name });
+        toast({
+          title: "Account created",
+          description: "Let's set up your profile.",
+        });
+        
+        onOpenChange(false);
+        setName("");
+        setEmail("");
+        setPassword("");
+        
+        // Force redirect to persona selection
+        setTimeout(() => {
+          window.location.replace('/persona-selection');
+        }, 500);
+        return;
+      }
+      
       onOpenChange(false);
       setName("");
       setEmail("");
       setPassword("");
-    }, 700);
+    } catch (error: any) {
+      toast({
+        title: "Authentication Error",
+        description: error.message || "An error occurred during authentication.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -109,7 +136,7 @@ export const AuthDialog = ({ open, onOpenChange, mode = "login" }: AuthDialogPro
         </div>
 
         <p className="text-xs text-muted-foreground text-center">
-          This is a frontend demo. Connect Supabase to enable secure authentication.
+          Secure authentication powered by Firebase.
         </p>
       </DialogContent>
     </Dialog>

@@ -1,0 +1,159 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Legal Tech Design System - Professional gradients and colors */
+
+@layer base {
+  :root {
+    /* Main Background System */
+    --background: 220 20% 97%;
+    --foreground: 220 15% 15%;
+
+    /* Glass morphism and cards */
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 15%;
+    --glass: 220 30% 95%;
+    --glass-border: 220 20% 85%;
+
+    /* Legal Brand Colors - Professional Blues & Purples */
+    --primary: 240 65% 55%;        /* Legal Blue */
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 240 80% 70%;   /* Lighter blue for glows */
+    
+    --secondary: 220 15% 92%;
+    --secondary-foreground: 220 15% 25%;
+
+    /* Risk Color System */
+    --risk-safe: 145 65% 45%;      /* Professional Green */
+    --risk-safe-bg: 145 60% 95%;
+    --risk-caution: 45 90% 55%;    /* Amber Warning */
+    --risk-caution-bg: 45 85% 95%;
+    --risk-high: 355 70% 55%;      /* Professional Red */
+    --risk-high-bg: 355 65% 95%;
+
+    /* Accent system for highlights */
+    --accent: 280 60% 65%;         /* Purple accent */
+    --accent-foreground: 0 0% 100%;
+    --accent-glow: 280 80% 80%;
+
+    /* Interface elements */
+    --muted: 220 15% 94%;
+    --muted-foreground: 220 10% 45%;
+    --border: 220 15% 88%;
+    --input: 220 15% 96%;
+    --ring: 240 65% 55%;
+
+    /* Destructive (errors) */
+    --destructive: 355 70% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --radius: 0.75rem;
+
+    /* Gradient System */
+    --gradient-primary: linear-gradient(135deg, hsl(240 65% 55%), hsl(280 60% 65%));
+    --gradient-subtle: linear-gradient(180deg, hsl(220 20% 98%), hsl(220 15% 96%));
+    --gradient-risk-safe: linear-gradient(135deg, hsl(145 65% 45%), hsl(145 70% 55%));
+    --gradient-risk-caution: linear-gradient(135deg, hsl(45 90% 55%), hsl(35 85% 60%));
+    --gradient-risk-high: linear-gradient(135deg, hsl(355 70% 55%), hsl(345 75% 60%));
+    
+    /* Glass effects */
+    --glass-bg: hsla(220, 30%, 95%, 0.8);
+    --glass-border: hsla(220, 20%, 85%, 0.3);
+    
+    /* Animation variables */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+    /* Shadow system */
+    --shadow-soft: 0 4px 20px hsla(220, 15%, 15%, 0.08);
+    --shadow-medium: 0 8px 30px hsla(220, 15%, 15%, 0.12);
+    --shadow-strong: 0 15px 40px hsla(220, 15%, 15%, 0.15);
+    --shadow-glow: 0 0 30px hsla(240, 65%, 55%, 0.3);
+  }
+
+  .dark {
+    --background: 220 25% 8%;
+    --foreground: 220 15% 92%;
+
+    --card: 220 20% 12%;
+    --card-foreground: 220 15% 92%;
+    --glass: 220 25% 15%;
+    --glass-border: 220 20% 25%;
+
+    --primary: 240 70% 65%;
+    --primary-foreground: 220 25% 8%;
+    --primary-glow: 240 80% 75%;
+
+    --secondary: 220 20% 18%;
+    --secondary-foreground: 220 15% 85%;
+
+    --accent: 280 65% 70%;
+    --accent-foreground: 220 25% 8%;
+    --accent-glow: 280 80% 85%;
+
+    --muted: 220 20% 15%;
+    --muted-foreground: 220 15% 60%;
+    --border: 220 20% 20%;
+    --input: 220 20% 15%;
+    --ring: 240 70% 65%;
+
+    --destructive: 355 75% 60%;
+    --destructive-foreground: 220 25% 8%;
+
+    /* Dark mode gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(240 70% 65%), hsl(280 65% 70%));
+    --gradient-subtle: linear-gradient(180deg, hsl(220 25% 10%), hsl(220 20% 12%));
+    
+    /* Dark glass effects */
+    --glass-bg: hsla(220, 25%, 15%, 0.8);
+    --glass-border: hsla(220, 20%, 25%, 0.3);
+    
+    /* Dark shadows */
+    --shadow-soft: 0 4px 20px hsla(220, 25%, 5%, 0.3);
+    --shadow-medium: 0 8px 30px hsla(220, 25%, 5%, 0.4);
+    --shadow-strong: 0 15px 40px hsla(220, 25%, 5%, 0.5);
+    --shadow-glow: 0 0 30px hsla(240, 70%, 65%, 0.4);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+  
+  /* Additional utility classes for legal document app */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  /* Glass morphism utilities */
+  .glass-panel {
+    @apply bg-glass-bg backdrop-blur-sm border-glass-border;
+  }
+  
+  /* Smooth transitions for all interactive elements */
+  .interactive {
+    @apply transition-all duration-300 ease-smooth;
+  }
+  
+  /* Risk level indicator utilities */
+  .risk-indicator-safe {
+    @apply bg-risk-safe text-white shadow-soft;
+  }
+  
+  .risk-indicator-caution {
+    @apply bg-risk-caution text-white shadow-soft;
+  }
+  
+  .risk-indicator-high {
+    @apply bg-risk-high text-white shadow-soft;
+  }
+}

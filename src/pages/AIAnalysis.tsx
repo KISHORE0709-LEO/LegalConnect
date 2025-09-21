@@ -1,160 +1,258 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, Upload, Download, FileText, Lightbulb, BookOpen } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { useToast } from "@/components/ui/use-toast";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Header } from '@/components/Header';
+import { ArrowLeft, Brain, AlertTriangle, CheckCircle, Users, Upload, FileText, Building } from 'lucide-react';
+import { CourtLocatorButton } from '@/components/CourtLocatorButton';
+import { useNavigate } from 'react-router-dom';
 
-export const AIAnalysis = () => {
+export default function AIAnalysis() {
   const navigate = useNavigate();
-  const { toast } = useToast();
-  const [uploadProgress, setUploadProgress] = useState(0);
+  const [analysisResult, setAnalysisResult] = useState<any>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
-  const handleFileUpload = () => {
-    setIsAnalyzing(true);
-    // Simulate upload progress
-    const interval = setInterval(() => {
-      setUploadProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setIsAnalyzing(false);
-          toast({ title: "Analysis Complete", description: "Your document has been simplified successfully!" });
-          return 100;
-        }
-        return prev + 10;
-      });
-    }, 200);
+  // Mock analysis result for demonstration
+  const mockAnalysis = {
+    documentType: 'Rental Agreement',
+    riskLevel: 'High',
+    risks: [
+      {
+        type: 'Illegal Clause',
+        description: 'Security deposit exceeds legal limit (3x monthly rent)',
+        severity: 'High',
+        location: 'Section 4.2'
+      },
+      {
+        type: 'Unfair Terms',
+        description: 'Tenant responsible for all repairs regardless of cause',
+        severity: 'Medium',
+        location: 'Section 7.1'
+      },
+      {
+        type: 'Missing Protection',
+        description: 'No clause protecting tenant privacy rights',
+        severity: 'Medium',
+        location: 'Throughout document'
+      }
+    ],
+    recommendations: [
+      'Negotiate security deposit to legal maximum',
+      'Request modification of repair responsibility clause',
+      'Add privacy protection clause'
+    ]
   };
 
-  const glossaryTerms = [
-    { term: "Indemnify", definition: "To protect someone from harm or loss by promising to pay for any damages" },
-    { term: "Lessor", definition: "The person who owns property and rents it out to someone else" },
-    { term: "Breach", definition: "Breaking or not following the rules in a contract" },
-    { term: "Liability", definition: "Being responsible for damages or harm caused to others" }
-  ];
+  const handleAnalyze = () => {
+    setIsAnalyzing(true);
+    // Simulate AI analysis
+    setTimeout(() => {
+      setAnalysisResult(mockAnalysis);
+      setIsAnalyzing(false);
+    }, 3000);
+  };
+
+  const handleConnectLawyer = () => {
+    navigate('/lawyer-connect', {
+      state: {
+        documentType: analysisResult?.documentType,
+        riskDetected: `${analysisResult?.risks[0]?.description} (${analysisResult?.riskLevel} Risk)`
+      }
+    });
+  };
+
+  const getSeverityColor = (severity: string) => {
+    switch (severity) {
+      case 'High': return 'bg-red-100 text-red-800 border-red-200';
+      case 'Medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      case 'Low': return 'bg-green-100 text-green-800 border-green-200';
+      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-secondary/30 to-legal-secondary/20">
-      {/* Header */}
-      <div className="border-b bg-background/95 backdrop-blur">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" onClick={() => navigate('/')} className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" />
-              Back to Dashboard
-            </Button>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-legal-primary to-legal-primary-dark bg-clip-text text-transparent">
-              AI-Powered Analysis
-            </h1>
-          </div>
-        </div>
-      </div>
-
+    <div className="min-h-screen bg-background">
+      <Header />
+      
       <div className="container mx-auto px-4 py-8">
-        <div className="grid lg:grid-cols-4 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-3 space-y-6">
-            {/* Upload Section */}
-            <Card className="bg-gradient-card border-border/50">
+        <Button variant="ghost" onClick={() => navigate('/')} className="mb-6">
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          Back to Home
+        </Button>
+        
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold mb-2">AI Legal Analysis</h1>
+          <p className="text-muted-foreground">Upload your document for instant AI-powered legal analysis</p>
+        </div>
+
+        {!analysisResult && (
+          <Card className="max-w-2xl mx-auto">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Brain className="h-5 w-5 text-blue-600" />
+                Document Analysis
+              </CardTitle>
+              <p className="text-muted-foreground">Upload a legal document to get started</p>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                <Upload className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                <p className="text-gray-600 mb-2">Drag and drop your document here</p>
+                <p className="text-sm text-gray-500 mb-4">Supports PDF, DOC, DOCX files up to 10MB</p>
+                <Button variant="outline">Choose File</Button>
+              </div>
+              
+              <div className="text-center">
+                <p className="text-sm text-muted-foreground mb-4">Or try with a sample document</p>
+                <Button onClick={handleAnalyze} disabled={isAnalyzing} className="w-full">
+                  {isAnalyzing ? (
+                    <>
+                      <Brain className="h-4 w-4 mr-2 animate-spin" />
+                      Analyzing Document...
+                    </>
+                  ) : (
+                    <>
+                      <FileText className="h-4 w-4 mr-2" />
+                      Analyze Sample Rental Agreement
+                    </>
+                  )}
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {analysisResult && (
+          <div className="max-w-4xl mx-auto space-y-6">
+            {/* Analysis Summary */}
+            <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Upload className="h-5 w-5 text-legal-primary" />
-                  Upload Document
+                <CardTitle className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-600" />
+                    Analysis Complete
+                  </div>
+                  <Badge className={getSeverityColor(analysisResult.riskLevel)}>
+                    {analysisResult.riskLevel} Risk
+                  </Badge>
                 </CardTitle>
-                <CardDescription>
-                  Upload your legal document to get AI-powered analysis and simplification
-                </CardDescription>
+                <p className="text-muted-foreground">Document Type: {analysisResult.documentType}</p>
               </CardHeader>
               <CardContent>
-                <div className="border-2 border-dashed border-legal-primary/30 rounded-xl p-8 text-center bg-gradient-to-br from-legal-primary/5 to-legal-primary-dark/5">
-                  <Upload className="h-12 w-12 text-legal-primary mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">Drag & drop your document here</h3>
-                  <p className="text-muted-foreground mb-4">or click to browse files</p>
-                  <Button onClick={handleFileUpload} className="bg-gradient-primary">
-                    Choose File
-                  </Button>
-                </div>
-                
-                {isAnalyzing && (
-                  <div className="mt-6">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-medium">Analyzing document...</span>
-                      <span className="text-sm text-muted-foreground">{uploadProgress}%</span>
-                    </div>
-                    <Progress value={uploadProgress} className="w-full" />
+                <div className="grid md:grid-cols-3 gap-4 text-center">
+                  <div>
+                    <div className="text-2xl font-bold text-red-600">{analysisResult.risks.length}</div>
+                    <p className="text-sm text-muted-foreground">Issues Found</p>
                   </div>
-                )}
+                  <div>
+                    <div className="text-2xl font-bold text-yellow-600">
+                      {analysisResult.risks.filter((r: any) => r.severity === 'High').length}
+                    </div>
+                    <p className="text-sm text-muted-foreground">High Priority</p>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-blue-600">{analysisResult.recommendations.length}</div>
+                    <p className="text-sm text-muted-foreground">Recommendations</p>
+                  </div>
+                </div>
               </CardContent>
             </Card>
 
-            {/* Document Preview */}
-            {uploadProgress === 100 && (
-              <Card className="bg-gradient-card border-border/50">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <FileText className="h-5 w-5 text-legal-primary" />
-                    Document Preview
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="bg-muted/50 p-4 rounded-lg">
-                    <h4 className="font-semibold mb-2">Original Clause 1:</h4>
-                    <p className="text-sm text-muted-foreground mb-3">
-                      "The <mark className="bg-yellow-200 dark:bg-yellow-800">lessee</mark> shall <mark className="bg-yellow-200 dark:bg-yellow-800">indemnify</mark> the <mark className="bg-yellow-200 dark:bg-yellow-800">lessor</mark> against all claims, damages, costs, and expenses arising from any <mark className="bg-red-200 dark:bg-red-800">breach</mark> of this agreement."
-                    </p>
-                    <Badge variant="outline" className="mb-3">High Risk Terms Detected</Badge>
-                  </div>
-                  
-                  <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950/50 dark:to-green-900/50 p-4 rounded-lg border border-green-200/50">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Lightbulb className="h-4 w-4 text-green-600" />
-                      <h4 className="font-semibold text-green-800 dark:text-green-200">Simplified Version:</h4>
-                    </div>
-                    <p className="text-green-700 dark:text-green-300">
-                      "If you (the renter) break any rules in this agreement, you must pay for any losses or legal costs the landlord faces because of it."
-                    </p>
-                  </div>
-
-                  <div className="flex gap-2">
-                    <Button size="sm" variant="outline">
-                      <Download className="h-4 w-4 mr-2" />
-                      Download Simplified Report
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-          </div>
-
-          {/* Sidebar - Glossary */}
-          <div className="lg:col-span-1">
-            <Card className="sticky top-8 bg-gradient-card border-border/50">
+            {/* Risk Details */}
+            <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <BookOpen className="h-5 w-5 text-legal-primary" />
-                  Legal Glossary
+                  <AlertTriangle className="h-5 w-5 text-red-600" />
+                  Identified Risks
                 </CardTitle>
-                <CardDescription>
-                  Understanding key legal terms
-                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                {glossaryTerms.map((item, index) => (
-                  <div key={index} className="space-y-2">
-                    <h4 className="font-semibold text-legal-primary">{item.term}</h4>
-                    <p className="text-sm text-muted-foreground">{item.definition}</p>
-                    {index < glossaryTerms.length - 1 && <Separator />}
+                {analysisResult.risks.map((risk: any, index: number) => (
+                  <div key={index} className="border rounded-lg p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="font-medium">{risk.type}</h3>
+                      <Badge className={getSeverityColor(risk.severity)}>
+                        {risk.severity}
+                      </Badge>
+                    </div>
+                    <p className="text-muted-foreground mb-2">{risk.description}</p>
+                    <p className="text-sm text-blue-600">Found in: {risk.location}</p>
                   </div>
                 ))}
               </CardContent>
             </Card>
+
+            {/* Recommendations */}
+            <Card>
+              <CardHeader>
+                <CardTitle>AI Recommendations</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2">
+                  {analysisResult.recommendations.map((rec: string, index: number) => (
+                    <li key={index} className="flex items-start gap-2">
+                      <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
+                      <span className="text-sm">{rec}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* Action CTAs */}
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Lawyer Connect CTA */}
+              <Card className="border-blue-200 bg-blue-50">
+                <CardContent className="pt-6">
+                  <div className="text-center">
+                    <Users className="h-12 w-12 text-blue-600 mx-auto mb-4" />
+                    <h3 className="text-xl font-semibold mb-2">Need Expert Help?</h3>
+                    <p className="text-muted-foreground mb-4">
+                      Connect with a qualified lawyer for professional advice.
+                    </p>
+                    <Button onClick={handleConnectLawyer} size="lg" className="bg-blue-600 hover:bg-blue-700 w-full">
+                      <Users className="h-4 w-4 mr-2" />
+                      Connect to a Lawyer
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Court Locator CTA */}
+              <Card className="border-green-200 bg-green-50">
+                <CardContent className="pt-6">
+                  <div className="text-center">
+                    <Building className="h-12 w-12 text-green-600 mx-auto mb-4" />
+                    <h3 className="text-xl font-semibold mb-2">Need to Escalate?</h3>
+                    <p className="text-muted-foreground mb-4">
+                      Find the right court or authority to file your case.
+                    </p>
+                    <CourtLocatorButton 
+                      caseType={analysisResult.documentType === 'Rental Agreement' ? 'rental' : 'consumer'}
+                      issueDescription={`${analysisResult.risks[0]?.description} detected in ${analysisResult.documentType}`}
+                      size="lg"
+                      className="bg-green-600 hover:bg-green-700 w-full"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-4 justify-center">
+              <Button variant="outline" onClick={() => setAnalysisResult(null)}>
+                Analyze Another Document
+              </Button>
+              <Button variant="outline">
+                Download Report
+              </Button>
+              <Button variant="outline">
+                Save to Profile
+              </Button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
-};
+}

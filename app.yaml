@@ -1,0 +1,37 @@
+runtime: nodejs20
+
+env_variables:
+  NODE_ENV: production
+  GOOGLE_CLOUD_PROJECT_ID: legal-connect-ai
+  GOOGLE_CLOUD_LOCATION: us-central1
+
+automatic_scaling:
+  min_instances: 1
+  max_instances: 10
+  target_cpu_utilization: 0.6
+  target_throughput_utilization: 0.6
+
+resources:
+  cpu: 1
+  memory_gb: 2
+  disk_size_gb: 10
+
+handlers:
+- url: /api/.*
+  script: auto
+  secure: always
+
+- url: /.*
+  static_files: dist/\1
+  static_dir: dist
+  upload: dist/.*
+  secure: always
+
+skip_files:
+- ^(.*/)?#.*#$
+- ^(.*/)?.*~$
+- ^(.*/)?.*\.py[co]$
+- ^(.*/)?.*/RCS/.*$
+- ^(.*/)?\..*$
+- ^(.*/)?node_modules/.*$
+- ^(.*/)?src/.*$

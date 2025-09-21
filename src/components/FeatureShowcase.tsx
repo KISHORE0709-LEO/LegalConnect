@@ -22,21 +22,24 @@ import {
   Search,
   FileCheck,
   Languages,
-  MicIcon
+  MicIcon,
+  PenTool,
+  CheckSquare,
+  Scale
 } from "lucide-react";
 
 const features = [
   {
     icon: Brain,
-    title: "AI-Powered Analysis",
-    description: "Advanced AI breaks down complex legal jargon into plain language you can understand.",
+    title: "AI-Powered Legal Assistant",
+    description: "Complete AI suite with document analysis, chat interface, voice commands, and instant processing.",
     badge: "Core Feature",
     color: "text-blue-600",
     bgColor: "bg-blue-50",
     detailedContent: {
-      overview: "Our advanced AI engine processes legal documents using natural language processing to transform complex legal jargon into simple, understandable language.",
-      benefits: ["Plain language summaries", "Clause-by-clause explanations", "Context-aware insights", "Role-specific interpretations"],
-      demo: "Upload a contract and see how 'The party of the first part shall indemnify...' becomes 'You must pay for any damages caused by your actions.'"
+      overview: "Our comprehensive AI engine combines document analysis, interactive chat, voice commands, and lightning-fast processing into one powerful legal assistant.",
+      benefits: ["Plain language summaries", "Interactive document chat", "Voice-powered queries", "Instant OCR processing", "Context-aware insights"],
+      demo: "Upload a contract, ask 'What are my payment terms?' via voice or text, and get instant analysis in under 10 seconds."
     }
   },
   {
@@ -50,19 +53,6 @@ const features = [
       overview: "Smart risk detection algorithms analyze clauses and highlight potential issues with color-coded warnings.",
       benefits: ["🟢 Green: Safe clauses", "🟡 Yellow: Needs attention", "🔴 Red: High risk", "Instant risk scoring"],
       demo: "Unfair termination clauses, excessive penalties, and one-sided terms are automatically flagged for your review."
-    }
-  },
-  {
-    icon: MessageSquare,
-    title: "Chat with Documents",
-    description: "Ask questions about your contract in natural language and get instant, accurate answers.",
-    badge: "Interactive",
-    color: "text-green-600",
-    bgColor: "bg-green-50",
-    detailedContent: {
-      overview: "Interactive Q&A system lets you ask questions about your document in plain English and get instant answers with exact text citations.",
-      benefits: ["Natural language queries", "Instant responses", "Source citations", "Follow-up questions supported"],
-      demo: "Ask 'Can I terminate early?' and get precise answers with relevant clause references."
     }
   },
   {
@@ -105,42 +95,42 @@ const features = [
     }
   },
   {
-    icon: Globe,
-    title: "Multi-Language Support",
-    description: "Available in English, Hindi, Telugu, and Tamil with accurate legal translations.",
-    badge: "Accessibility",
+    icon: PenTool,
+    title: "Smart Contract Drafting",
+    description: "Generate legally-structured contract drafts from plain language descriptions using AI.",
+    badge: "AI Generation",
     color: "text-indigo-600",
     bgColor: "bg-indigo-50",
     detailedContent: {
-      overview: "Comprehensive language support with accurate legal translations preserving legal meaning across languages.",
-      benefits: ["4+ language support", "Legal-specific translation", "Cultural context awareness", "Regional law variations"],
-      demo: "Analyze Hindi contracts or get Tamil explanations of English legal documents."
+      overview: "Describe your contract needs in plain language and get a professionally structured first draft with proper legal sections and clauses.",
+      benefits: ["Plain language input", "Structured legal output", "Multiple contract types", "Export to PDF/Word", "Lawyer review option"],
+      demo: "Type 'I need a freelance photography contract that protects my photo rights' and get a complete draft in seconds."
     }
   },
   {
-    icon: Mic,
-    title: "Voice Assistant",
-    description: "Ask questions via voice and get explanations read aloud in your preferred language.",
-    badge: "Voice AI",
-    color: "text-pink-600",
-    bgColor: "bg-pink-50",
+    icon: CheckSquare,
+    title: "Legal Action Planner",
+    description: "Get actionable to-do lists and step-by-step guidance for any legal document with interactive tracking.",
+    badge: "Action Guide",
+    color: "text-green-600",
+    bgColor: "bg-green-50",
     detailedContent: {
-      overview: "Voice-powered interface allows hands-free interaction with your legal documents using speech recognition and text-to-speech.",
-      benefits: ["Voice questions", "Audio explanations", "Multiple languages", "Accessibility features"],
-      demo: "Say 'What are my payment obligations?' and hear the answer in your preferred language."
+      overview: "Transform passive document analysis into practical action plans with context-aware suggestions for before signing, after signing, and record keeping.",
+      benefits: ["Before/After signing checklists", "Interactive to-do tracker", "Document-specific guidance", "Export action plans", "Email reminders"],
+      demo: "Upload a rental agreement and get: 'Before signing: Verify landlord ID', 'After signing: Take property photos', 'Records: Save digital copies'."
     }
   },
   {
-    icon: Zap,
-    title: "Instant Processing",
-    description: "OCR technology and fast AI processing deliver results in seconds, not hours.",
-    badge: "Speed",
-    color: "text-yellow-600",
-    bgColor: "bg-yellow-50",
+    icon: Scale,
+    title: "Legal Defense Writer",
+    description: "Generate formal legal letters and notices to defend your rights against unfair clauses or violations.",
+    badge: "Pro-Bono",
+    color: "text-amber-600",
+    bgColor: "bg-amber-50",
     detailedContent: {
-      overview: "Lightning-fast document processing using advanced OCR and optimized AI algorithms for near-instant analysis.",
-      benefits: ["OCR for scanned docs", "Sub-10 second processing", "Batch processing", "Real-time analysis"],
-      demo: "Upload a 50-page contract and get complete analysis in under 10 seconds."
+      overview: "AI-powered legal brief generator that creates professional letters, notices, and formal documents to help users stand up for their rights without expensive legal fees.",
+      benefits: ["Formal legal language", "Law citations included", "Professional formatting", "Download Word/PDF", "Email integration"],
+      demo: "Report: 'My landlord charged illegal cleaning fees' → Get a formal letter citing relevant laws and demanding refund."
     }
   }
 ];
@@ -242,15 +232,14 @@ export const FeatureShowcase = () => {
                       <div className="flex gap-2 pt-4">
                       <Button className="bg-gradient-primary shadow-legal" onClick={() => {
                         const routeMap: { [key: string]: string } = {
-                          "AI-Powered Analysis": "/ai-analysis",
+                          "AI-Powered Legal Assistant": "/ai-features",
                           "Risk Assessment": "/risk-assessment", 
-                          "Chat with Documents": "/chat-documents",
                           "Lawyer Connect": "/lawyer-connect",
                           "Court Locator": "/court-locator",
                           "Document Comparison": "/document-comparison",
-                          "Multi-Language Support": "/multi-language",
-                          "Voice Assistant": "/voice-assistant",
-                          "Instant Processing": "/instant-processing"
+                          "Smart Contract Drafting": "/smart-contract-drafting",
+                          "Legal Action Planner": "/legal-action-planner",
+                          "Legal Defense Writer": "/legal-defense-writer"
                         };
                         const route = routeMap[feature.title];
                         if (route) {
@@ -273,37 +262,7 @@ export const FeatureShowcase = () => {
           })}
         </div>
 
-        <div className="text-center mt-16">
-          <div className="bg-gradient-to-br from-legal-primary via-legal-primary-dark to-legal-primary p-8 rounded-2xl shadow-legal text-primary-foreground max-w-4xl mx-auto relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent"></div>
-            <div className="relative z-10">
-              <h3 className="text-2xl font-bold mb-4">
-                Ready to Make Legal Documents Simple?
-              </h3>
-              <p className="text-primary-foreground/80 mb-6">
-                Join thousands of users who trust Legal Connect for their document analysis needs.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-6 justify-center mb-6">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-legal-accent">10K+</div>
-                  <div className="text-sm text-primary-foreground/70">Documents Analyzed</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-legal-accent">500+</div>
-                  <div className="text-sm text-primary-foreground/70">Verified Lawyers</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-legal-accent">95%</div>
-                  <div className="text-sm text-primary-foreground/70">Accuracy Rate</div>
-                </div>
-              </div>
-              <Button size="lg" variant="secondary" className="bg-white/20 text-primary-foreground hover:bg-white/30 border-white/30">
-                Get Started Today
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </div>
-          </div>
-        </div>
+
       </div>
     </section>
   );

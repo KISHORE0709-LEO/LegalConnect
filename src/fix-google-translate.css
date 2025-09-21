@@ -1,0 +1,17 @@
+/* Fix Google Translate widget layout to be inline flex */
+#google_translate_element > div {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+#google_translate_element > div > div {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+/* Hide Google logo */
+#google_translate_element img {
+  display: none !important;
+}
