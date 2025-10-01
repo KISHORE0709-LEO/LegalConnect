@@ -1,33 +1,30 @@
-# Task: Header and Authentication UI Updates
+# Refactor Home Page Components for Better Structure
+
+## Overview
+Refactor the monolithic LawyerConnectShowcase and CourtLocatorShowcase components into smaller, modular sub-components for improved organization, maintainability, and reusability. This will break down the home page sections without changing the visual output.
 
 ## Steps
 
-1. Update Header (`src/components/Header.tsx`)
-   - Move "Legal Connect / Professional Legal Services" text to left side near the end.
-   - Rename "Get Started" button to "Login" and move it to right side near the end.
-   - Slightly increase header height.
+### LawyerConnectShowcase Refactor
+- [x] Create `src/components/LawyerFlowDiagram.tsx` - Extract the flow diagram section (AI Analysis, Risk Alert, Expert Match).
+- [ ] Create `src/components/LawyerCards.tsx` - Extract the verified lawyers cards section.
+- [ ] Create `src/components/LawyerFeatures.tsx` - Extract the features grid (Secure Chat, Verified Lawyers, etc.).
+- [ ] Create `src/components/LawyerCTA.tsx` - Extract the CTA section (Ready to Connect...).
+- [ ] Update `src/components/LawyerConnectShowcase.tsx` - Refactor to import and use the new sub-components, removing the extracted code.
 
-2. Create Login/Signup Page (`src/pages/FarmEasyAuth.tsx`)
-   - Full screen gradient background.
-   - Centered card with shadow, blur, and responsive padding.
-   - Animated farm emoji with rotation.
-   - Dynamic title and subtitle based on mode.
-   - Animated toggle between login and signup.
-   - Form fields with icons, validation, show/hide password.
-   - Buttons with animations and Google OAuth button.
-   - Framer Motion animations throughout.
+### CourtLocatorShowcase Refactor
+- [ ] Create `src/components/CourtFlowDiagram.tsx` - Extract the flow diagram section (Case Analysis, Location Match, Filing Guide).
+- [ ] Create `src/components/CourtCards.tsx` - Extract the courts & authorities cards section.
+- [ ] Create `src/components/CourtFeatures.tsx` - Extract the features grid (Location-Based, Filing Guidance, etc.).
+- [ ] Create `src/components/CourtCTA.tsx` - Extract the CTA section (Ready to Take Legal Action...).
+- [ ] Update `src/components/CourtLocatorShowcase.tsx` - Refactor to import and use the new sub-components, removing the extracted code.
 
-3. Create Profile Page (`src/pages/Profile.tsx`)
-   - Simple profile page showing user info.
-   - Accessible after login/signup.
+### Final Steps
+- [ ] Test the home page (`src/pages/Index.tsx`) to ensure no visual or functional changes.
+- [ ] Verify responsiveness across devices.
+- [ ] Clean up any unused imports or code.
 
-4. Integrate login/signup page with authentication flow.
-   - Replace or complement existing AuthDialog.
-
-5. Update routing if needed.
-
-6. Test all changes thoroughly.
-
----
-
-Starting with step 1: Header changes.
+## Notes
+- Ensure all sub-components maintain the exact same styling and content as the original sections.
+- No changes to `src/pages/Index.tsx` or other files unless necessary.
+- After completion, the home page should render identically but with better code structure.
